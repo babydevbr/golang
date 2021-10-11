@@ -1,0 +1,5 @@
+build:
+  languages:
+    - go
+run:
+  web: golang
