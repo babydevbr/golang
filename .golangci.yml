@@ -1,0 +1,136 @@
+# options for analysis running
+run:
+  # default concurrency is a available CPU number
+  concurrency: 4
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  timeout: 30s
+
+# all available settings of specific linters
+linters-settings:
+  golint:
+    # minimal confidence for issues, default is 0.8
+    min-confidence: 0
+  lll:
+    line-length: 140
+  depguard:
+    list-type: blacklist
+    packages:
+    - github.com/pkg/errors
+    packages-with-error-message:
+    - github.com/pkg/errors: "replace github.com/pkg/errors with GO 1.13+ fmt.Errorf"
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+  misspell:
+    locale: US
+  gocyclo:
+    # minimal code complexity to report, 30 by default (but we recommend 10-20)
+    min-complexity: 10
+
+linters:
+  disable-all: true
+  fast: false
+  enable:
+    # List of enabled-by-default linters that we explicitly opt-in.
+    - deadcode
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
+
+    # List of disabled-by-default linters that we explicitly opt-in.
+    - asciicheck
+    - bodyclose
+    - cyclop
+    - depguard
+    - dogsled
+    - dupl
+    - durationcheck
+    - errorlint
+    - exhaustive
+    # - exhaustivestruct -> This linter is meant to be used only for special cases. It is not recommended to use it for all files in a project.
+    - exportloopref
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - godox
+    - goerr113
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - gomnd
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - ifshort
+    - importas
+    - lll
+    - makezero
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - nlreturn
+    - noctx
+    - nolintlint
+    - prealloc
+    - predeclared
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - stylecheck
+    - tagliatelle
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - wastedassign
+    - whitespace
+    - wrapcheck
+    - wsl
+
+    # deprecated linters
+    # - golint Replaced by revive
+    # - interfacer
+    # - maligned Replaced by govet 'fieldalignment'
+    # - scopelint Replaced by exportloopref
+
+issues:
+  # Independently from option `exclude` we use default exclude patterns,
+  # it can be disabled by this option. To list all
+  # excluded by default patterns execute `golangci-lint run --help`.
+  # Default value for this option is true.
+  exclude-use-default: false
+  # List of regexps of issue texts to exclude, empty list by default.
+  # But independently from this option we use default exclude patterns,
+  # it can be disabled by `exclude-use-default: false`. To list all
+  # excluded by default patterns execute `golangci-lint run --help`
+  exclude:
+    - Using the variable on range scope `tt` in function literal
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - funlen
+ 
+service:
+  golangci-lint-version: 1.41.1
