@@ -24,7 +24,7 @@ import (
 func main() {
 	log.Println("Start API")
 
-	dbURL := env.Get("DATABASE_URL", "")
+	dbURL := env.Get("DATABASE_URL", "host=localhost port=5432 user=postgres dbname=postgres password=postgres sslmode=disable")
 
 	db, err := provideDB(dbURL, true)
 	if err != nil {
